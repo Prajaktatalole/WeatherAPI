@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Api</title>
+</head>
+
+<body>
+
+    <h1 align="center" style="background-color: red;">Car API</h1>
+
+    <form action="">
+
+        <table align="center" border="1">
+            
+            <tr>
+                <td><b>Input Model :</b></td>
+            
+                <td><input type="text" id="model"></td>
+            </tr>
+            
+            <tr>
+                <td><b>Input Company :</b></td>
+            
+                <td><input type="text" id="company"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"> <button id="submit">Click me</button></td>
+            </tr>
+        </table>
+
+      
+
+
+    </form>
+
+    Model :<span id="model1"></span>
+    <br>
+    Company :<span id="company1"></span>
+    <br>
+   
+   <!-- city_mpg:
+   <span id="city_mpg"></span>
+   compact car
+   <span id="cc"></span>
+   cylinders
+   <span id="cy"></span> -->
+   
+    Content :
+    <br>
+   <span id="con"> </span>
+
+
+
+
+
+    <script>
+        // fetch('sample1.txt').then((response)=>{
+        //     console.log(response.status)
+        //     console.log(response.ok)
+        //     return response.text()
+        //  }).then((data)=>console.log(data))
+
+        const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '974bf8fbefmshea1af6ffae40044p1802f0jsne999e9558dc3',
+		'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com'
+	}
+};
+
+        model = document.getElementById('model')
+        model1=document.getElementById('model1')
+        sub = document.getElementById('submit')
+        company = document.getElementById('company')
+        company1=document.getElementById('company1')
+        // city_mpg = document.getElementById('city_mpg')
+        // cc=document.getElementById('cc')
+        // cy=document.getElementById('none')
+
+
+        let carapi = (model,company) => {
+            model1.innerHTML=model
+            company1.innerHTML=company
+            fetch('https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model='+model+'&make='+company,
+        options).then((response)=>{
+            console.log(response.status)
+            console.log(response.ok)
+            return response.json()
+        }).then((data)=>{
+             console.log(data[0].city_mpg)
+            
+              for (var i=0 ;i<data.length;i++){
+                    con.innerHTML += "City MPG :" + data[i].city_mpg + " Class :"  +data[i].class + "   "+" cylinders: "+ data[i].cylinders+
+                    " combination_mpg :"+ data[i].combination_mpg + "<br>"
+                    
+              }
+
+              
+
+             
+           
+            })
+        }
+
+        sub.addEventListener('click',(event)=>{event.preventDefault(),
+        carapi(model.value,company.value)})
+
+
+        carapi("Corolla", "Toyota")
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
